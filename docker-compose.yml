@@ -1,0 +1,28 @@
+version: '3.1'
+
+services:
+  # odoo:
+  # Se cambia todo web2_dev por el NOMBRE que queramos:
+  webs2_dev:
+    image: odoo:16.0
+    depends_on:
+      - mydbs2_dev
+    volumes:
+      - ./extra-addons:/mnt/extra-addons
+    ports:
+      - "8069:8069"
+    environment:
+      - HOST=mydbs2_dev # same name as the postgres service
+      - USER=odoo
+      - PASSWORD=odoo
+
+
+  # postgres:
+  mydbs2_dev:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: odoo
+      POSTGRES_USER: odoo
